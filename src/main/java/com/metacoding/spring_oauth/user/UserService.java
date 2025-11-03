@@ -23,7 +23,7 @@ public class UserService {
     private final KakaoToken kakaoToken;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${kakao.authorize-uri:https://kauth.kakao.com/oauth/authorize}")
+    @Value("${kakao.authorize-uri}")
     private String kakaoAuthorizeUri;
 
     @Value("${kakao.client-id}")
