@@ -1,33 +1,23 @@
 package com.metacoding.spring_oauth._core.utils;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.metacoding.spring_oauth.user.KakaoResponse;
 
-@Component
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class KakaoToken {
 
     private final String clientId;
     private final String redirectUri;
     private final String clientSecret;
-
-    public KakaoToken(
-            @Value("${kakao.client-id}") String clientId,
-            @Value("${kakao.redirect-uri}") String redirectUri,
-            @Value("${kakao.client-secret:}") String clientSecret
-    ) {
-        this.clientId = clientId;
-        this.redirectUri = redirectUri;
-        this.clientSecret = clientSecret;
-    }
 
     public KakaoResponse.TokenDTO getKakaoToken(String code, RestTemplate restTemplate) {
         HttpEntity<MultiValueMap<String, String>> request = createTokenRequest(code);
