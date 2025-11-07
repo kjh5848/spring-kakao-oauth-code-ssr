@@ -6,8 +6,8 @@ public class PostResponse {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    public record ListDTO(Integer id, String title, String author, String createdAt) {
-        public ListDTO(Post post) {
+    public record ListItemDTO(Integer id, String title, String author, String createdAt) {
+        public ListItemDTO(Post post) {
             this(
                     post.getId(),
                     post.getTitle(),

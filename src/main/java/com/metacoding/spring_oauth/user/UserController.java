@@ -18,17 +18,14 @@ public class UserController {
 
     @GetMapping("/")
     public String loginPage() {
-        if (session.getAttribute("sessionUser") != null) {
-            return "redirect:/post/list";
-        }
         return "login";
     }
 
     @PostMapping("/login")
     public String login(@ModelAttribute UserRequest.LoginDTO loginDTO) {
-        if (session.getAttribute("sessionUser") != null) {
-            return "redirect:/post/list";
-        }
+        
+        System.out.println("로그인: " +loginDTO);
+        
         UserResponse.DTO sessionUser = userService.로그인(loginDTO);
         session.setAttribute("sessionUser", sessionUser);
         return "redirect:/post/list";
@@ -36,9 +33,6 @@ public class UserController {
 
     @PostMapping("/join")
     public String join(@ModelAttribute UserRequest.JoinDTO joinDTO) {
-        if (session.getAttribute("sessionUser") != null) {
-            return "redirect:/post/list";
-        }
         UserResponse.DTO sessionUser = userService.회원가입(joinDTO);
         session.setAttribute("sessionUser", sessionUser);
         return "redirect:/post/list";
@@ -59,7 +53,6 @@ public class UserController {
     @GetMapping("/oauth/callback")
     public String kakaoCallback(
             @RequestParam(value = "code", required = false) String code) {
-
         if (code == null || code.isBlank()) {
             return "redirect:/login";
         }

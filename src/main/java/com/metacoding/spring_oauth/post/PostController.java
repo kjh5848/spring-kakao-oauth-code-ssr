@@ -19,9 +19,6 @@ public class PostController {
     @GetMapping("/post/list")
     public String list(Model model) {
         UserResponse.DTO sessionUser = (UserResponse.DTO) session.getAttribute("sessionUser");
-        if (sessionUser == null) {
-            return "redirect:/";
-        }
         model.addAttribute("user", sessionUser);
         model.addAttribute("posts", postService.게시글목록());
         return "list";

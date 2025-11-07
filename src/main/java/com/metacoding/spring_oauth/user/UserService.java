@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import com.metacoding.spring_oauth._core.utils.KakaoToken;
+import com.metacoding.spring_oauth._core.utils.KakaoApiClient;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final KakaoToken kakaoToken;
+    private final KakaoApiClient kakaoApiClient;
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${kakao.authorize-uri}")
@@ -51,7 +51,7 @@ public class UserService {
 
     @Transactional
     public UserResponse.DTO 카카오로그인(String code) {
-        KakaoResponse.TokenDTO tokenDTO = kakaoToken.getKakaoToken(code, restTemplate);
+        KakaoResponse.TokenDTO tokenDTO = kakaoApiClient.getKakaoToken(code, restTemplate);
         if (tokenDTO == null || tokenDTO.accessToken() == null) {
             throw new RuntimeException("카카오 Access Token 발급에 실패했습니다.");
         }
@@ -68,7 +68,7 @@ public class UserService {
     }
 
     private UserResponse.DTO 로그인토큰(String kakaoAccessToken) {
-        KakaoResponse.KakaoUserDTO kakaoUser = kakaoToken.getKakaoUser(kakaoAccessToken, restTemplate);
+        KakaoResponse.KakaoUserDTO kakaoUser = kakaoApiClient.getKakaoUser(kakaoAccessToken, restTemplate);
         if (kakaoUser == null) {
             throw new RuntimeException("카카오 사용자 정보를 불러올 수 없습니다.");
         }

@@ -14,10 +14,10 @@ public class PostService {
 
     private final PostRepository postJPARepository;
 
-    public List<PostResponse.ListDTO> 게시글목록() {
+    public List<PostResponse.ListItemDTO> 게시글목록() {
         return postJPARepository.findAllWithUser()
                 .stream()
-                .map(PostResponse.ListDTO::new)
+                .map(PostResponse.ListItemDTO::new)
                 .toList();
     }
 }
